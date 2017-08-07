@@ -1,0 +1,65 @@
+* Top-down estimating 7th Aug
+
+** Last week
+
+*** ANN code                                                           :Guil:
+**** 2M images: 2 hrs to build index, 5 mins for 100k for lookup (10-NN), 3GB
+*** ANN Metrics                                                        :Guil:
+*** Filtering by distance                                              :Guil:
+**** Make preds for dist < thresh -> 60% :: $5000 -> $2000 (flwing)
+*** Explored existing features                                         :Guil:
+**** concatenate image features (~100k)
+
+** Discussion
+
+*** MIL split
+**** Filter on other parts 'undamaged' rather than 'no_operation'?
+*** Distance functions
+**** Cosine distance > Euclidean distance?
+**** Maybe resolved by proper normalisation?
+*** Metrics
+**** % of claims w less than < 10% MAE (Ajay's metric)
+
+** High-level
+
+*** URR scores + metadata NN, conditioned on MMY                     :Marcel:
+*** MIL RR frontal features + NN                                   :Ken:Guil:
+**** Conditioned on MMY
+
+**** (Clustered using k-means + filtered)
+**** With added metadata salt
+**** (later: metric learning on estimate value)
+
+*** Failure cases
+**** not enough claims (after conditioning on MMY)
+- can we condense down further? (combine different Camry's etc.)
+- clusters should definitely be big enough with MMY
+**** NN doesn't work
+- are these features relevant enough?
+**** same type of damage leads to different estimates
+- potentially addressed by adding _relevant_ metadata (-> later)
+
+# what are the things the visual models don't have an incentive to learn? (but visually)
+- labour hours?
+-- just train another model on e.g. labour hours
+-- add labour hours as MTL objective, and then use the feature space
+
+** Tasks
+
+*** TODO Write up MIL feature analysis                                  :Ken:
+*** TODO Complete computation of MIL feats (mon)                        :Ken:
+
+*** TODO Ingest of feature chunks (mon)                                :Guil:
+*** TODO Explore feature normalisation                                 :Guil:
+
+*** TODO Add conditioning on MMY to codebase                           :Guil:
+*** TODO Separate indexes for each MMY?                                :Guil:
+
+*** TODO Feature space visualisation w. MMY clusters?                   :Ken:
+*** TODO More or less intense based on estimate value?                  :Ken:
+*** TODO Qualitiative analysis of first result                     :Ken:Guil:
+
+*** TODO What next? Adding metadata?                                    :Ken:
+
+*** TODO MMY bucket analysis                                         :Marcel:
+*** TODO URR scores (binary output) for frontal NN, conditioned MMY  :Marcel:
